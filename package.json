@@ -7,7 +7,7 @@
     "develop": "gatsby develop --host=0.0.0.0",
     "deploy": "gatsby build && gh-pages -d public -b master",
     "format": "prettier --write \"**/*.{js,jsx,json,md,yml}\"",
-    "start": "gatsby develop",
+    "start": "yarn run develop",
     "build": "gatsby build",
     "clean": "gatsby clean"
   },
