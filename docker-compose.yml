@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  web:
+    image: node:12.16.1
+    working_dir: /y0n0zawa.github.io
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/y0n0zawa.github.io
+      - node_modules:/y0n0zawa.github.io/node_modules
+    environment:
+      - NODE_ENV=development
+    command: "yarn start"
+volumes:
+  node_modules:
