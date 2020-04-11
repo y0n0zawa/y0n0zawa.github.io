@@ -1,6 +1,7 @@
 {
   "name": "y0n0zawa.github.io",
   "private": true,
+  "author": "y0n0zawa <yoshitomo.onozawa@gmail.com>",
   "version": "0.0.1",
   "scripts": {
     "develop": "gatsby develop",
