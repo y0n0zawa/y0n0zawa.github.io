@@ -9,7 +9,7 @@ module.exports = {
   siteMetadata: {
     title: `y0n0zawa.github.io`,
     author: `y0n0zawa`,
-    description: `少しづつ書きます。`,
+    description: ``,
     social: [
       {
         name: `twitter`,
