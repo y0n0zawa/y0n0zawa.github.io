@@ -1,0 +1,101 @@
+---
+title: ブログを書くことにした。
+date: 2020-04-11
+---
+
+以前より調べた技術のメモを残そうと思ってた。
+ブログを作るにあたって決めた内容は下記の通り。
+
+- `Markdown` で記事を書けるようにする。
+- `GitHub Pages` でホスティングする。
+- `gatsby.js` で静的なコンテンツを生成する。
+- `release` ブランチにマージされたタイミングでコンテンツを更新する。
+- コンテンツの更新には `CircleCI` を使う。
+
+# やったこと
+
+## 下準備
+npm を使って gatsby ををインストールした。
+
+```sh
+$ npm install -g gatsby
+```
+
+## プロジェクトの生成
+下記のコマンドを実行してプロジェクトを生成した。
+
+```sh
+$ gatsby new y0n0zawa.github.io https://github.com/gatsbyjs/gatsby-starter-blog-theme
+```
+
+## favicon の設定
+faviconを追加するために下記のコマンドを実行してプラグインを追加した。
+
+```sh
+$ yarn add gatsby-plugin-favicon
+```
+
+設定を追加して画像パスを指定することで無事 favicon が変更できた。
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-theme-blog`,
+      options: {},
+    },
+    {
+      resolve: `gatsby-plugin-favicon`,
+      options: {
+        logo: "./content/assets/favicon.png",
+      },
+    },
+  ],
+  ...
+};
+```
+
+## docker-compose
+サーバサイドのプロダクトを開発するときは必ず docker を使うようにしているので、今回も同様に設定を追加した。
+```yml:title=docker-compose.yml
+version: "3"
+
+services:
+  web:
+    image: node:12.16.1
+    working_dir: /y0n0zawa.github.io
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/y0n0zawa.github.io
+      - node_modules:/y0n0zawa.github.io/node_modules
+    environment:
+      - NODE_ENV=development
+    command: "yarn start"
+volumes:
+  node_modules:
+
+```
+
+また、gatsbyで起動するwebサーバーはデフォルトで外部からのアクセスしておらず、このままでは docker の中で起動したサービスにアクセスできないので、起動時に `--host` オプションを指定して外部からのリクエスト受け付けるよう変更した。
+
+```diff
++"develop": "gatsby develop --host=0.0.0.0",
+-"develop": "gatsby develop",
+```
+
+docker-copmpose では `yarn start` で起動するよう設定しているので `yarn run develop` のaliasになるよう修正しておく。
+
+```diff
++"start": "yarn run develop",
+-"start": "gatsby develop",
+```
+
+ここまで設定を変更したあと、下記のコマンドを実行することでdocker-composeで準備したWebサーバーを起動することができる。
+
+```sh
+$ docker-compose up
+$ open http://localhost:8000
+```
+
+以上。
