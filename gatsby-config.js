@@ -10,6 +10,12 @@ module.exports = {
         logo: "./content/assets/favicon.png",
       },
     },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "UA-163405017-1",
+      },
+    },
   ],
   // Customize your site metadata:
   siteMetadata: {
