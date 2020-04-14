@@ -1,0 +1,30 @@
+---
+title: Google Analyticsを導入した。
+date: 2020-04-14
+---
+
+GatsbyJSで作成したブログにGoogle Analyticsを導入した。
+やったことは下記の通り。
+
+# パッケージの追加
+このブログはローカルの環境を docker-compose で起動できるよう準備しているので、
+`docker-compose run` で yarn のパッケージを追加していく。
+
+```sh:
+$ docker-compose run --rm web yarn add gatsby-plugin-google-analytics
+```
+
+# 追加したパッケージをモジュールとして読み込む
+
+```js:title=gatsby.js
+plugins: [
+{
+    resolve: "gatsby-plugin-google-analytics",
+    options: { 
+        trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
+    }
+},
+],
+```
+
+以上。
