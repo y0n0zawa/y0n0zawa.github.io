@@ -7,6 +7,6 @@ import { Styled } from "theme-ui"
 
 export default () => (
   <Fragment>
-      <Styled>おもしろいと思ったことは何でも実践していきます。</Styled>
+    <Styled>おもしろいと思ったことは何でも実践していきます。</Styled>
   </Fragment>
 )
